@@ -24,14 +24,16 @@ export class ProductsController {
 
     @Get('filter')
     getProductFilter() {
-        return `Yo soy un filter`;
+        return `i am a filter`;
     }
 
     @Get(':id')
     @HttpCode(HttpStatus.ACCEPTED)
     getProduct(@Param('id') id:string) {
       return this.productsService.findOne(+id);
+   
     }
+
     @Post()
     create(@Body() payload:any){
        // return {

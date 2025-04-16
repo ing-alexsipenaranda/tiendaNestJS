@@ -1,14 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { CategoriesService } from 'src/services/categories/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
 
-
+    constructor(
+        private categoriesService: CategoriesService
+    ) {}
     @Get('')
     getCategories(){
-        return {
-            message: 'Categories list',
-        }
+        return this.categoriesService.findAll();
     }
 
     @Get(':id/products/:productId')
@@ -17,11 +18,17 @@ export class CategoriesController {
     } 
     @Post()
     create(@Body() payload:any){
-        return{
-            message: 'Category created',
-            payload,
-        };
+        return this.categoriesService.create(payload);
 
+    }
+    @Put(':id')
+    update(@Param('id') id:number, @Body() payload:any){
+        return this.categoriesService.update(id, payload);
+    }
+    @Delete(':id') 
+    delete(@Param('id') id:number){ 
+            return  this.categoriesService.delete(id);
+           
     }
   
 }
